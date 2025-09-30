@@ -1,0 +1,33 @@
+
+flowchart LR
+  subgraph Client
+    MLApp[External ML App (quarterly)]
+  end
+
+  subgraph Storage["Object Storage (MinIO)"]
+    RAW[(raw/)]
+    CUR[(curated/)]
+    AGG[(aggregated/)]
+  end
+
+  subgraph Orchestration["Airflow"]
+    DAG[Batch DAG]
+  end
+
+  subgraph Compute["Spark Cluster"]
+    SPARK[(Spark 3.5)]
+  end
+
+  subgraph Services
+    ING[Ingestion Service (Python)]
+    API[Delivery API (FastAPI)]
+  end
+
+  DS[Host data_source/] -->|push| ING -->|S3 put| RAW
+  DAG -->|trigger| ING
+  DAG -->|spark-submit| SPARK
+  SPARK -->|read| RAW
+  SPARK -->|write| CUR
+  SPARK -->|aggregate| AGG
+  API -->|list/presign| AGG
+  MLApp -->|GET| API

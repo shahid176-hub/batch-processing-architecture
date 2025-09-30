@@ -1,0 +1,13 @@
+
+flowchart TD
+  A[Monthly Ingestion Window] --> B[Airflow kicks ingest task]
+  B --> C[Ingestion service scans ./data_source]
+  C --> D[Upload new files to s3a://raw/ by date partition]
+  D --> E[Airflow triggers Spark job]
+  E --> F[Spark validates schema & dedups]
+  F --> G[Write curated parquet to s3a://curated/]
+  G --> H[Quarterly aggregation window?]
+  H -->|Yes| I[Aggregate to s3a://aggregated/ with snapshot ts]
+  H -->|No| J[Stop]
+  I --> K[Notify Delivery API / cache refresh]
+  K --> L[ML app consumes latest aggregates via API]

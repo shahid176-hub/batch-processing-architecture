@@ -1,0 +1,19 @@
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+# Node / misc
+node_modules/
+# OS
+.DS_Store
+Thumbs.db
+# Data and outputs
+data/
+volumes/
+logs/
+# Airflow
+airflow/logs/
+airflow/*.db
