@@ -1,8 +1,8 @@
 
-# Batch Processing Data Architecture (Phase 1-ready)
+# Batch Processing Data Architecture 
 
 A **locally reproducible**, containerised, microservices-based batch data backend designed for a quarterly ML workflow.
-This repository focuses on the **Conception Phase** deliverables with runnable skeletons for the next phases.
+
 
 ## Microservices
 - **Ingestion**: Python service that loads timestamped CSV/JSON files from a host `./data_source` into **MinIO** (object storage) under the `raw/` zone.
